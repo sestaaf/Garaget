@@ -6,7 +6,7 @@ namespace Garage
 	{
 		static void Main(string[] args)
 		{
-			Console.WriteLine("Hello Garage!");
+			UI.MainMenu();
 		}
 	}
 }

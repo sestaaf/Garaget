@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Garage
 {
-	class Vehicle
+	abstract class Vehicle
 	{
 		public string Model { get; set; }
 		protected string RegNo { get; set; }
