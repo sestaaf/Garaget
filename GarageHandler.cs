@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Garage
 {
-	public class GarageHandler : IHandler, IEnumerable<T>
+	public class GarageHandler : IHandler
 	{
 		private Garage<Vehicle> garage;
 
@@ -33,11 +33,6 @@ namespace Garage
 			}
 		}
 
-		public IEnumerator<T> GetEnumerator()
-		{
-			throw new NotImplementedException();
-		}
-
 		public void GetVehicleOut()
 		{
 			throw new NotImplementedException();
@@ -51,23 +46,28 @@ namespace Garage
 
 		public void PopulateGarage()
 		{
-			var parkedVehicles = garage.VehiclesParked;
-			
-			// Bara test tills jag vet hur detta ska göras.
-			foreach (var item in parkedVehicles.ToString())
+			var vehiclesToPark = new List<Vehicle>
 			{
-				Console.WriteLine(item);
+				new Car(200, "Volvo V60", "ABC121", "Green", 4, "petrol", 65),
+				new Car(250, "Volvo V90", "ABC122", "Red", 4, "diesel", 70),
+				new Car(190, "Volkswagen Passat", "BAC121", "Blue", 4, "electric/petrol", 60),
+				new Car(200, "Volkswagen Golf", "BAC122", "White", 4, "petrol", 60),
+				new Bus(60, "Scania", "CBA121", "Blue", 8, "diesel", 100),
+				new Bus(100, "Man", "CBA122", "Red", 4, "diesel", 120),
+				new Motorcycle(1200, "BMW R1200RS", "CAB121", "Silver", 2, "petrol", 20),
+				new Airplane(2, "Attack Aircraft", "XYXKK34122", "White", 4, "petrol", 200),
+				new Boat(10, "Chris Craft Triple", "KKXCY47192", "Yellow", 4, "petrol", 200),
+			};
+			
+			foreach (var item in vehiclesToPark.ToArray())
+			{
+				garage.AddVehicleToParkingPlace(item); 
 			}
 		}
 
 		public void SearchVehicleByProperties()
 		{
 			throw new NotImplementedException();
-		}
-
-		IEnumerator IEnumerable.GetEnumerator()
-		{
-			return GetEnumerator();
 		}
 	}
 }

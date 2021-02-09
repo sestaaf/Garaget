@@ -24,12 +24,15 @@ namespace Garage
 
 		public IEnumerator<T> GetEnumerator()
 		{
-			throw new NotImplementedException();
+			return null;
 		}
 
 		IEnumerator IEnumerable.GetEnumerator()
 		{
 			return GetEnumerator();
 		}
+
+		internal T[] AddVehicleToParkingPlace(Vehicle vehicle) => vehiclesParked;
+
 	}
 }
