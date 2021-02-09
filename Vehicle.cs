@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
@@ -22,5 +23,6 @@ namespace Garage
 			FuelType = fuelType;
 			FuelCapacity = fuelCapacity;
 		}
+
 	}
 }

@@ -6,6 +6,13 @@ namespace Garage
 {
 	class UI : IUI
 	{
+        private GarageHandler garageHandler;
+        private Vehicle vehicle;
+
+        public UI()
+		{
+            garageHandler = new GarageHandler();
+		}
 		public void MainMenu()
 		{
             char nav = ' ';
@@ -39,22 +46,22 @@ namespace Garage
                 switch (nav)
                 {
                     case '1':
-                        CreateGarage();
+                        garageHandler.CreateGarage();
                         break;
                     case '2':
-                        PopulateGarage();
+                        garageHandler.PopulateGarage();
                         break;
                     case '3':
-                        ParkVechicle();
+                        garageHandler.ParkVechicle();
                         break;
                     case '4':
-                        GetVehicleOut();
+                        garageHandler.GetVehicleOut();
                         break;
                     case '5':
-                        FindVehicleByRegNo();
+                        garageHandler.FindVehicleByRegNo();
                         break;
                     case '6':
-                        SearchVehicleByProperties();
+                        garageHandler.SearchVehicleByProperties();
                         break;
                     case 'Q': // Exit Menu.
                     case 'q':
