@@ -8,10 +8,7 @@ namespace Garage
 	class Garage<T> : IEnumerable<T> where T : Vehicle
 	{
 
-		private T[] vehiclesParked;
-
-		private int numberOfParkingPlaces;
-
+		public T[] vehiclesParked;
 
 		public Garage(int numberOfParkingPlaces)
 		{
@@ -26,12 +23,12 @@ namespace Garage
 		{
 			//Yield
 			//Return ett fordon i taget!
+		
 			foreach (var item in vehiclesParked)
 			{
 				yield return item;
-			};
+			}
 		}
-
 		IEnumerator IEnumerable.GetEnumerator()
 		{
 			return GetEnumerator();
@@ -39,7 +36,7 @@ namespace Garage
 
 		internal bool AddVehicleToParkingPlace(T vehicle)
 		{
-			bool ret =false;
+			bool addVehicleTest = false;
 			for (int i = 0; i < vehiclesParked.Length; i++)
 			{
 				if (vehiclesParked[i] == null)
@@ -47,20 +44,21 @@ namespace Garage
 					try
 					{
 						vehiclesParked[i] = vehicle;
-						Console.WriteLine($"Vehicle {vehicle.Model} with reg no {vehicle.RegNo} is now parked in the Garage.");
-						ret = true;
+						Console.WriteLine($"Vehicle {vehicle.Model} with reg no {vehicle.RegNo} are now parked in the Garage.");
+						addVehicleTest = true;
 						break;
 					}
 					catch (ArgumentException e)
 					{
 						Console.WriteLine("Unfortunately something went wrong.");
 						Console.WriteLine($"Error: {e.GetType().Name}, { e.Message}");
-						ret = false;
+						addVehicleTest = false;
 						break;
 					}
 				}
 			}
-			return ret;
+			return addVehicleTest;
 		}
+
 	}
 }

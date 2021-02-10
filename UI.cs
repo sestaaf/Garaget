@@ -19,13 +19,14 @@ namespace Garage
 
             while (true)
             {
-                Console.WriteLine("Please navigate through the menu by inputting the number \n(1, 2, 3 ,4, Q) of your choice"
+                Console.WriteLine("\nPlease navigate through the menu by inputting the number \n(1, 2, 3 , 4, 5, 6, 7 or Q) of your choice"
                     + "\n1. Create a Garage."
                     + "\n2. Populate the Garage."
                     + "\n3. Park a Vehicle in the Garage."
                     + "\n4. Get a parked Vehicle out of the Garage."
                     + "\n5. Find a specific parked Vehicle by Registration No."
                     + "\n6. Search for Vehicle(s) by Properties."
+                    + "\n7. List ALL Vehicles parked in the Garage."
 
                     + "\nQ. Exit the application\n");
 
@@ -63,8 +64,12 @@ namespace Garage
                     case '6':
                         garageHandler.SearchVehicleByProperties();
                         break;
+                    case '7':
+                        garageHandler.ListAllParkedVehicles();
+                        break;
                     case 'Q': // Exit Menu.
                     case 'q':
+                        Environment.Exit(0);
                         break;
                     default:
                         break;

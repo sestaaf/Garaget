@@ -8,42 +8,18 @@ namespace Garage
 	public class GarageHandler : IHandler
 	{
 		private Garage<Vehicle> garage;
-
+		
 		public void CreateGarage()
 		{
-			Console.WriteLine("How many Parking places in Garage?");
+			Console.WriteLine("How many Parking places should there be in the Garage?");
 			string input = Console.ReadLine();
 			if (input != null)
 			{ 
 				int.TryParse(input, out int parkingCapacity);
 				garage = new Garage<Vehicle>(numberOfParkingPlaces: parkingCapacity);
-				Console.WriteLine($"A garage with {parkingCapacity} are created.");
+				Console.WriteLine($"A garage with {parkingCapacity} parking places are created.");
 			}
 		}
-
-		public void FindVehicleByRegNo()
-		{
-			Console.WriteLine("What Reg No do you look for?");
-			string regNoToSearch = Console.ReadLine().ToUpper();
-			if (regNoToSearch != null)
-			{
-				//var result = garage.VehiclesParked
-				//		.Where(r => r.RegNo == regNoToSearch);
-				//return result;
-			}
-		}
-
-		public void GetVehicleOut()
-		{
-			throw new NotImplementedException();
-		}
-
-		public void ParkVechicle()
-		{
-
-			throw new NotImplementedException();
-		}
-
 		public void PopulateGarage()
 		{
 			var vehiclesToPark = new List<Vehicle>
@@ -61,13 +37,47 @@ namespace Garage
 			
 			foreach (var item in vehiclesToPark.ToArray())
 			{
-				garage.AddVehicleToParkingPlace(item); 
+				if (!garage.AddVehicleToParkingPlace(item))
+					break; 
+			}
+
+
+		}
+		public void ParkVechicle()
+		{
+
+			throw new NotImplementedException();
+		}
+		public void GetVehicleOut()
+		{
+			throw new NotImplementedException();
+		}
+		public void FindVehicleByRegNo()
+		{
+			Console.WriteLine("What Reg No do you look for?");
+			string regNoToSearch = Console.ReadLine().ToUpper();
+			if (regNoToSearch != null)
+			{
+				//var result = garage.VehiclesParked
+				//		.Where(r => r.RegNo == regNoToSearch);
+				//return result;
 			}
 		}
-
 		public void SearchVehicleByProperties()
 		{
 			throw new NotImplementedException();
+		}
+		public void ListAllParkedVehicles()
+		{
+			if (garage == null) CreateGarage();
+			var checkParkedVehicles = garage?.vehiclesParked;
+			foreach (var item in checkParkedVehicles)
+			{
+				if (item != null)
+				{ 
+					Console.WriteLine($"{item.GetType()} Model: {item.Model}, RegNo: {item.RegNo}.");
+				}
+			}
 		}
 	}
 }

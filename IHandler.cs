@@ -12,6 +12,7 @@ namespace Garage
 		void GetVehicleOut();
 		void FindVehicleByRegNo();
 		void SearchVehicleByProperties();
+		void ListAllParkedVehicles();
 
 	}
 }
