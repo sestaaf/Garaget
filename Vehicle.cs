@@ -8,7 +8,7 @@ namespace Garage
 	abstract class Vehicle
 	{
 		public string Model { get; set; }
-		protected string RegNo { get; set; }
+		internal string RegNo { get; set; }
 		public string Color { get; set; }
 		public int NoOfWheels { get; set; }
 		public string FuelType { get; set; }
