@@ -33,32 +33,5 @@ namespace Garage
 		{
 			return GetEnumerator();
 		}
-
-		internal bool AddVehicleToParkingPlace(T vehicle)
-		{
-			bool addVehicleTest = false;
-			for (int i = 0; i < vehiclesParked.Length; i++)
-			{
-				if (vehiclesParked[i] == null)
-				{ 
-					try
-					{
-						vehiclesParked[i] = vehicle;
-						Console.WriteLine($"Vehicle {vehicle.Model} with reg no {vehicle.RegNo} are now parked in the Garage.");
-						addVehicleTest = true;
-						break;
-					}
-					catch (ArgumentException e)
-					{
-						Console.WriteLine("Unfortunately something went wrong.");
-						Console.WriteLine($"Error: {e.GetType().Name}, { e.Message}");
-						addVehicleTest = false;
-						break;
-					}
-				}
-			}
-			return addVehicleTest;
-		}
-
 	}
 }

@@ -11,31 +11,53 @@ namespace Garage
 		
 		public void CreateGarage()
 		{
-			Console.WriteLine("How many Parking places should there be in the Garage?");
-			string input = Console.ReadLine();
-			if (input != null)
-			{ 
-				int.TryParse(input, out int parkingCapacity);
-				garage = new Garage<Vehicle>(numberOfParkingPlaces: parkingCapacity);
-				Console.WriteLine($"A garage with {parkingCapacity} parking places are created.");
-			}
+			bool testGarageSize = false;
+
+			do
+			{
+				Console.WriteLine("How many Parking places should there be in the Garage?");
+				string input = Console.ReadLine();
+				int.TryParse(input, out int inputInt);
+				if (inputInt >= 10)
+				{
+					int.TryParse(input, out int parkingCapacity);
+					garage = new Garage<Vehicle>(numberOfParkingPlaces: parkingCapacity);
+					Console.WriteLine($"A garage with {parkingCapacity} parking places are created.");
+					testGarageSize = true;
+				}
+				else
+				{
+					Console.WriteLine("Please enter a value bigger or equal to 10!");
+					testGarageSize = false;
+				}
+
+			} while (!testGarageSize);
 		}
 		public void PopulateGarage()
 		{
-			Console.WriteLine("PrePopulate or park Vehicle(s) Manually? (P or M), Q to Main Menu.");
-			string input = Console.ReadLine();
-			string choice = input.ToUpper().Substring(0, 1);
+			if (garage == null)
+			{
+				Console.WriteLine("The Garage is not yet built!");
+				CreateGarage();
+			}
+
+			Console.WriteLine("\nManually park a Vehicle or PrePopulate the Garage? \n(Your choise: M or P, Q to Main Menu.\n");
+			Console.Write("Input > ");
+			//string input = Console.ReadLine();
+			string choice = Console.ReadLine().ToUpper().Substring(0, 1);
 			bool toMainMenu = false;
 			var ui = new UI();
-			
-			if (garage == null) CreateGarage();
 
 			do
 			{
 				switch (choice)
 				{
+					case ("M"):
+						ui.ParkManuallyMenu();
+						toMainMenu = true;
+						break;
 					case ("P"):
-						var vehiclesToPark = new List<Vehicle>
+						var vehiclesToParkPopulate = new List<Vehicle>
 						{
 							new Car(200, "Volvo V60", "ABC121", "Green", 4, "petrol", 65),
 							new Car(250, "Volvo V90", "ABC122", "Red", 4, "diesel", 70),
@@ -47,17 +69,7 @@ namespace Garage
 							new Airplane(2, "Attack Aircraft", "XYXKK34122", "White", 4, "petrol", 200),
 							new Boat(10, "Chris Craft Triple", "KKXCY47192", "Yellow", 4, "petrol", 200),
 						};
-						AddVehicleToGarage(vehiclesToPark);
-						toMainMenu = true;
-						break;
-					case ("M"):
-						ui.ParkManuallyMenu();
-						var vehiclesToPark2 = new List<Vehicle>
-						{
-							new Car(200, "Volvo V60", "ABC121", "Green", 4, "petrol", 65),
-						};
-						AddVehicleToGarage(vehiclesToPark2);
-						toMainMenu = true;
+						AddVehicleToGarage(vehiclesToParkPopulate);
 						break;
 					case ("Q"):
 						toMainMenu = true;
@@ -73,17 +85,12 @@ namespace Garage
 		{
 			foreach (var item in vehiclesToPark)
 			{
-				if (!garage.AddVehicleToParkingPlace(item))
+				if (!AddVehicleToParkingPlace(item))
 				{
 					Console.WriteLine("The Garage is full, please come back later.");
 					break;
 				}
 			}
-		}
-
-		public void ParkVechicle()
-		{
-			PopulateGarage();
 		}
 		public void GetVehicleOut()
 		{
@@ -106,15 +113,54 @@ namespace Garage
 		}
 		public void ListAllParkedVehicles()
 		{
-			if (garage == null) CreateGarage();
-			var checkParkedVehicles = garage?.vehiclesParked;
-			foreach (var item in checkParkedVehicles)
+			if (garage != null)
 			{
-				if (item != null)
-				{ 
-					Console.WriteLine($"{item.GetType()} Model: {item.Model}, RegNo: {item.RegNo}.");
+				var checkParkedVehicles = garage.vehiclesParked;
+				foreach (var item in checkParkedVehicles)
+				{
+					if (item != null)
+					{ 
+						Console.WriteLine($"{item.GetType()} Model: {item.Model}, RegNo: {item.RegNo}.");
+					}
 				}
 			}
+		}
+		internal bool AddVehicleToParkingPlace(Vehicle vehicle)
+		{
+			bool addVehicleTest = false;
+
+			var vehiclesInGarage = garage.vehiclesParked;
+
+			for (int i = 0; i < vehiclesInGarage.Length; i++)
+			{
+				foreach (var item in vehiclesInGarage)
+				{
+					if (vehicle.RegNo == item?.RegNo)
+					{
+						Console.WriteLine("This Reg No already exists in the Garage!\nPlease try again");
+						addVehicleTest = false;
+						break;
+					}
+				}
+				if (garage.vehiclesParked[i] == null)
+				{
+					try
+					{
+						garage.vehiclesParked[i] = vehicle;
+						Console.WriteLine($"Vehicle {vehicle.Model} with reg no {vehicle.RegNo} are now parked in the Garage.");
+						addVehicleTest = true;
+						break;
+					}
+					catch (ArgumentException e)
+					{
+						Console.WriteLine("Unfortunately something went wrong.");
+						Console.WriteLine($"Error: {e.GetType().Name}, { e.Message}");
+						addVehicleTest = false;
+						break;
+					}
+				}
+			}
+			return addVehicleTest;
 		}
 	}
 }

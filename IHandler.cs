@@ -8,7 +8,6 @@ namespace Garage
 	{
 		void CreateGarage();
 		void PopulateGarage();
-		void ParkVechicle();
 		void GetVehicleOut();
 		void FindVehicleByRegNo();
 		void SearchVehicleByProperties();
