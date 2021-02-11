@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Garage
@@ -115,8 +116,7 @@ namespace Garage
 		{
 			if (garage != null)
 			{
-				var checkParkedVehicles = garage.vehiclesParked;
-				foreach (var item in checkParkedVehicles)
+				foreach (var item in garage)
 				{
 					if (item != null)
 					{ 
@@ -125,42 +125,61 @@ namespace Garage
 				}
 			}
 		}
-		internal bool AddVehicleToParkingPlace(Vehicle vehicle)
+		internal string AddVehicleToParkingPlace(Vehicle vehicle)
 		{
-			bool addVehicleTest = false;
+			//Check if garage is Full!
 
-			var vehiclesInGarage = garage.vehiclesParked;
+			var found = garage.FirstOrDefault(v => v.RegNo == vehicle.RegNo);
 
-			for (int i = 0; i < vehiclesInGarage.Length; i++)
-			{
-				foreach (var item in vehiclesInGarage)
-				{
-					if (vehicle.RegNo == item?.RegNo)
-					{
-						Console.WriteLine("This Reg No already exists in the Garage!\nPlease try again");
-						addVehicleTest = false;
-						break;
-					}
-				}
-				if (garage.vehiclesParked[i] == null)
-				{
-					try
-					{
-						garage.vehiclesParked[i] = vehicle;
-						Console.WriteLine($"Vehicle {vehicle.Model} with reg no {vehicle.RegNo} are now parked in the Garage.");
-						addVehicleTest = true;
-						break;
-					}
-					catch (ArgumentException e)
-					{
-						Console.WriteLine("Unfortunately something went wrong.");
-						Console.WriteLine($"Error: {e.GetType().Name}, { e.Message}");
-						addVehicleTest = false;
-						break;
-					}
-				}
-			}
-			return addVehicleTest;
+			//foreach (var item in garage)
+			//{
+			//	if(item.RegNo == vehicle.RegNo)
+			//		return "RegNo existss";
+			//}
+
+			if (found is null) return "RegNo existss";
+
+			 var ok= garage.Park(vehicle);
+
+			return ok ? "Ok" : "Error";
+
+
+
+
+			//bool addVehicleTest = false;
+
+
+
+			//for (int i = 0; i < garage.Count(); i++)
+			//{
+			//	foreach (var item in garage)
+			//	{
+			//		if (vehicle.RegNo == item.RegNo)
+			//		{
+			//			Console.WriteLine("This Reg No already exists in the Garage!\nPlease try again");
+			//			addVehicleTest = false;
+			//			return false;
+			//		}
+			//	}
+			//	if (garage[i] == null)
+			//	{
+			//		try
+			//		{
+			//			garage[i] = vehicle;
+			//			Console.WriteLine($"Vehicle {vehicle.Model} with reg no {vehicle.RegNo} are now parked in the Garage.");
+			//			addVehicleTest = true;
+			//			break;
+			//		}
+			//		catch (ArgumentException e)
+			//		{
+			//			Console.WriteLine("Unfortunately something went wrong.");
+			//			Console.WriteLine($"Error: {e.GetType().Name}, { e.Message}");
+			//			addVehicleTest = false;
+			//			break;
+			//		}
+			//	}
+			//}
+			//return addVehicleTest;
 		}
 	}
 }
