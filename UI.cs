@@ -7,7 +7,7 @@ namespace Garage
 	class UI : IUI
 	{
         private GarageHandler garageHandler;
-        private Vehicle vehicle;
+        //private Vehicle vehicle;
 
         public UI()
 		{
@@ -78,5 +78,86 @@ namespace Garage
             } 
 
         }
-    }
+
+		public void ParkManuallyMenu()
+		{
+            bool returnToMainMenu = false;
+            do
+            {
+                Console.WriteLine("\nPlease navigate through the menu by inputting the number \n(1, 2, 3 , 4, 5, 6, 7 or Q) of your choice"
+                    + "\n1. Park a Car."
+                    + "\n2. Park a Motorcycle."
+                    + "\n3. Park a Trike."
+                    + "\n4. Park a Bus."
+                    + "\n5. Park a Boat."
+                    + "\n6. Park a Airplane."
+                    + "\n7. List ALL Vehicles parked in the Garage."
+
+                    + "\nQ. Exit the application\n");
+
+                Console.Write("Input > ");
+
+                string input = Console.ReadLine();
+                char nav = ' ';
+                try
+                {
+                    nav = input[0];
+                }
+                catch (IndexOutOfRangeException)
+                {
+                    Console.Clear();
+                    Console.WriteLine("\nPlease enter some input!");
+                }
+
+                switch (nav)
+                {
+                    case '1':
+                        //public Car(int noOfHorsePowers, string model, string regNo, string color, int noOfWheels, string fuelType, int fuelCapacity)
+                        Console.WriteLine("Please enter Model: ");
+                        string model = Console.ReadLine();
+                        Console.WriteLine("Please enter Reg No: ");
+                        string regNo = Console.ReadLine();
+                        Console.WriteLine("Please enter no of HorsePowers: ");
+                        input = Console.ReadLine();
+                        int.TryParse(input, out int noOfHorsePowers);
+                        Console.WriteLine("Please enter Model: ");
+                        string color = Console.ReadLine();
+                        Console.WriteLine("Please enter Model: ");
+                        input = Console.ReadLine();
+                        int.TryParse(input, out int noOfWheels);
+                        Console.WriteLine("Please enter Model: ");
+                        string fuelType = "";
+                        Console.WriteLine("Please enter Model: ");
+                        input = Console.ReadLine();
+                        int.TryParse(input, out int fuelCapacity);
+						Console.WriteLine($"{noOfHorsePowers}, {model}, {regNo}, {color}, {noOfWheels}, {fuelType}, {fuelCapacity}");
+                        break;
+                    case '2':
+                        
+                        break;
+                    case '3':
+                        
+                        break;
+                    case '4':
+                        
+                        break;
+                    case '5':
+                        
+                        break;
+                    case '6':
+                        
+                        break;
+                    case '7':
+                        garageHandler.ListAllParkedVehicles();
+                        break;
+                    case 'Q': // Exit Menu.
+                    case 'q':
+                        Environment.Exit(0);
+                        break;
+                    default:
+                        break;
+                }
+            } while (!returnToMainMenu);
+        }
+	}
 }
