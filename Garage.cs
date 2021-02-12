@@ -55,7 +55,7 @@ namespace Garage
 
 			foreach (var item in vehiclesParked)
 			{
-				if (item == null)
+				if (item != null)
 					yield return item;
 			}
 		}

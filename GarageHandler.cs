@@ -71,6 +71,7 @@ namespace Garage
 							new Boat(10, "Chris Craft Triple", "KKXCY47192", "Yellow", 4, "petrol", 200),
 						};
 						AddVehicleToGarage(vehiclesToParkPopulate);
+						toMainMenu = true;
 						break;
 					case ("Q"):
 						toMainMenu = true;
@@ -87,7 +88,7 @@ namespace Garage
 			foreach (var item in vehiclesToPark)
 			{
 				var message = AddVehicleToParkingPlace(item);
-				Console.WriteLine(	message);
+				Console.WriteLine(message);
 			}
 		}
 		public void GetVehicleOut()
@@ -125,49 +126,21 @@ namespace Garage
 		internal string AddVehicleToParkingPlace(Vehicle vehicle)
 		{
 			// Check if RegNo is already in the Garage!
+			// ToDo : Går bra att försöka köra de 9 fordonen igen, men inte enstaka!
+			//		  Då hittas att de finns redan och går tillbaka till menyn.
+			//		  Men inte om enstaka fordon ska läggas in, då får g.RegNo
+			//		  spel och tycker att det är null och kraschar.
+				
 			var found = garage.FirstOrDefault(g => g?.RegNo == vehicle.RegNo);
-
-			if (found != null) return "RegNo exists! Already parked. Wrong Reg No given, please try again.";
+			
+			if (found != null) return "RegNo exists! Already parked. Wrong RegNo given, please try again.";
 
 			// Try to park the vehicle and test if it's possible.
-			var parkingWorks = (garage.Park(vehicle));
-			return parkingWorks ? $"Ok - Your {vehicle.GetType().Name} is parked." : "Error - Parking not possible! Garage is full!";
-
-
-			//bool addVehicleTest = false;
+			var parkingWorks = garage.Park(vehicle);
+			return parkingWorks ? $"Your {vehicle.GetType().Name} with reg no {vehicle.RegNo} is parked." : "Error - Parking not possible! Garage is full!";
 
 
 
-			//for (int i = 0; i < garage.Count(); i++)
-			//{
-			//	foreach (var item in garage)
-			//	{
-			//		if (vehicle.RegNo == item.RegNo)
-			//		{
-			//			Console.WriteLine("This Reg No already exists in the Garage!\nPlease try again");
-			//			addVehicleTest = false;
-			//			return false;
-			//		}
-			//	}
-			//	if (garage[i] == null)
-			//	{
-			//		try
-			//		{
-			//			garage[i] = vehicle;
-			//			Console.WriteLine($"Vehicle {vehicle.Model} with reg no {vehicle.RegNo} are now parked in the Garage.");
-			//			addVehicleTest = true;
-			//			break;
-			//		}
-			//		catch (ArgumentException e)
-			//		{
-			//			Console.WriteLine("Unfortunately something went wrong.");
-			//			Console.WriteLine($"Error: {e.GetType().Name}, { e.Message}");
-			//			addVehicleTest = false;
-			//			break;
-			//		}
-			//	}
-			//}
-			//return addVehicleTest;
 		}
 	}
 }

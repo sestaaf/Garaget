@@ -102,7 +102,7 @@ namespace Garage
 					Console.WriteLine("\nPlease enter some input!");
 				}
 
-				var vehicleToParkM = new List<Vehicle>();
+				//var vehicleToParkM = Vehicle vehicle;
 				string model, regNo, color, fuelType;
 				int noOfHorsePowers, noOfWheels, fuelCapacity;
 				
@@ -112,7 +112,7 @@ namespace Garage
 				{
 					case '1':
 						noOfHorsePowers = Util.AskForInt("Enter no of HorsePowers:\t");
-						vehicleToParkM.Add(new Car(noOfHorsePowers, model, regNo, color, noOfWheels, fuelType, fuelCapacity));
+						garageHandler.AddVehicleToParkingPlace(new Car(noOfHorsePowers, model, regNo, color, noOfWheels, fuelType, fuelCapacity));
 						break;
 					case '2':
 
@@ -140,8 +140,7 @@ namespace Garage
 						break;
 				}
 				
-				garageHandler.AddVehicleToGarage(vehicleToParkM);
-
+				//garageHandler.AddVehicleToGarage(vehicleToParkM);
 			} while (!returnToMainMenu);
 
 			static string GetVehicleCommonProperties(string input, out string model, out string regNo, out string color, out int noOfWheels, out string fuelType, out int fuelCapacity)
