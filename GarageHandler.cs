@@ -86,11 +86,8 @@ namespace Garage
 		{
 			foreach (var item in vehiclesToPark)
 			{
-				if (!AddVehicleToParkingPlace(item))
-				{
-					Console.WriteLine("The Garage is full, please come back later.");
-					break;
-				}
+				var message = AddVehicleToParkingPlace(item);
+				Console.WriteLine(	message);
 			}
 		}
 		public void GetVehicleOut()
@@ -120,30 +117,21 @@ namespace Garage
 				{
 					if (item != null)
 					{ 
-						Console.WriteLine($"{item.GetType()} Model: {item.Model}, RegNo: {item.RegNo}.");
+						Console.WriteLine($"{item.GetType().Name} Model: {item.Model}, RegNo: {item.RegNo}.");
 					}
 				}
 			}
 		}
 		internal string AddVehicleToParkingPlace(Vehicle vehicle)
 		{
-			//Check if garage is Full!
+			// Check if RegNo is already in the Garage!
+			var found = garage.FirstOrDefault(g => g?.RegNo == vehicle.RegNo);
 
-			var found = garage.FirstOrDefault(v => v.RegNo == vehicle.RegNo);
+			if (found != null) return "RegNo exists! Already parked. Wrong Reg No given, please try again.";
 
-			//foreach (var item in garage)
-			//{
-			//	if(item.RegNo == vehicle.RegNo)
-			//		return "RegNo existss";
-			//}
-
-			if (found is null) return "RegNo existss";
-
-			 var ok= garage.Park(vehicle);
-
-			return ok ? "Ok" : "Error";
-
-
+			// Try to park the vehicle and test if it's possible.
+			var parkingWorks = (garage.Park(vehicle));
+			return parkingWorks ? $"Ok - Your {vehicle.GetType().Name} is parked." : "Error - Parking not possible! Garage is full!";
 
 
 			//bool addVehicleTest = false;
