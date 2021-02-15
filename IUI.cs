@@ -4,5 +4,6 @@
 	{
 		void MainMenu();
 		void ParkManuallyMenu();
+		void SearchByPropertyMenu();
 	}
 }

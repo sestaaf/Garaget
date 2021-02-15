@@ -128,10 +128,11 @@ namespace Garage
 			
 		}
 
-		public void SearchVehicleByProperties()
+		public void SearchVehicleByProperties(string propToSearchFor)
 		{
-			throw new NotImplementedException();
+			
 		}
+
 		public void ListAllParkedVehicles()
 		{
 			if (garage != null)

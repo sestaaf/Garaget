@@ -62,6 +62,7 @@ namespace Garage
 						garageHandler.GetVehicleOut();
 						break;
 					case '6':
+						SearchByPropertyMenu();
 						garageHandler.SearchVehicleByProperties();
 						break;
 					case '7':
@@ -84,7 +85,7 @@ namespace Garage
 
 			do
 			{
-				Console.WriteLine("\nPlease navigate through the menu by inputting the number \n(1, 2, 3 , 4, 5, 6, 7 or Q) of your choice"
+				Console.WriteLine("\nPlease choose a Vehicle to Park by entering the number \n(1, 2, 3 , 4, 5, 6, 7 or Q) of your choice"
 					+ "\n1. Park a Car."
 					+ "\n2. Park a Motorcycle."
 					+ "\n3. Park a Trike."
@@ -92,7 +93,7 @@ namespace Garage
 					+ "\n5. Park a Boat."
 					+ "\n6. Park a Airplane."
 					+ "\n7. List ALL Vehicles parked in the Garage."
-					+ "\n\nQ. Exit the application\n");
+					+ "\n\nQ. Exit this menu.\n");
 
 				Console.Write("Input > ");
 				string input = Console.ReadLine();
@@ -151,6 +152,71 @@ namespace Garage
 				}
 				
 			} while (!returnToLastMenu);
+		}
+
+		public void SearchByPropertyMenu()
+		{
+			bool returnToLastMenu = false;
+			char nav = ' ';
+			string propToSearchFor = ""; 
+
+			string brand, model, regNo, color, fuelType;
+			int noOfWheels, fuelCapacity;
+
+			Console.WriteLine("\nGive in values to the Properties you want to search for a Vehicle with?\n";
+			brand = Util.AskForString("Enter a Brand to search for:\t");
+
+			model = Util.AskForString("Enter a Model to search for:\t");
+			color = Util.AskForString("Enter a Color to search for:\t");
+			noOfWheels = Util.AskForInt("Enter no of Wheels to search for:\t");
+			fuelType = Util.AskForString("Enter the Fuel Type to search for:\t"); 
+			fuelCapacity = Util.AskForInt("Enter the Fuel Capacity to search for:\t");
+
+			Console.Write("Input > ");
+			string input = Console.ReadLine();
+
+			try
+			{
+				nav = input[0];
+			}
+			catch (IndexOutOfRangeException)
+			{
+				Console.Clear();
+				Console.WriteLine("\nPlease enter some input!");
+			}
+
+
+			switch (nav)
+			{
+				case '1':
+					propToSearchFor = "brand";
+					break;
+				case '2':
+					propToSearchFor = "model";
+					break;
+				case '3':
+					propToSearchFor = "color";
+					break;
+				case '4':
+					propToSearchFor = "noOfWheels";
+					break;
+				case '5':
+					propToSearchFor = "fuelType";
+					break;
+				case '6':
+					propToSearchFor = "fuelCapacity";
+					break;
+				case '7':
+				case 'Q': // Exit Menu.
+				case 'q':
+					returnToLastMenu = true;
+					break;
+				default:
+					break;
+			}
+
+		} while (!returnToLastMenu);
+			SearchVehicleByProperties(propToSearchFor);
 		}
 	}
 }

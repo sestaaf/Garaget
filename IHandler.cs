@@ -13,6 +13,6 @@ namespace Garage
 		void GetVehicleOut();
 		void ListAllParkedVehicles();
 		void PrePopulateGarage();
-		void SearchVehicleByProperties();
+		void SearchVehicleByProperties(string propToSearchFor);
 	}
 }
