@@ -117,27 +117,27 @@ namespace Garage
 				switch (nav)
 				{
 					case '1':
-						noOfHorsePowers = Util.AskForInt("Enter no of HorsePowers (eg 150):\t");
+						noOfHorsePowers = Util.AskForInt("Enter no of HorsePowers (eg 150):");
 						garageHandler.AddVehicleToParkingPlace(new Car(noOfHorsePowers, brand, model, regNo, color, noOfWheels, fuelType, fuelCapacity));
 						break;
 					case '2':
-						cylinderVolume = Util.AskForInt("Enter Cylinder volume (eg 1200):\t");
+						cylinderVolume = Util.AskForInt("Enter Cylinder volume (eg 1200):");
 						garageHandler.AddVehicleToParkingPlace(new Motorcycle(cylinderVolume, brand, model, regNo, color, noOfWheels, fuelType, fuelCapacity));
 						break;
 					case '3':
-						weight = Util.AskForInt("Enter the Trikes weight (eg 325):\t");
+						weight = Util.AskForInt("Enter the Trikes weight (eg 325):");
 						garageHandler.AddVehicleToParkingPlace(new Trike(weight, brand, model, regNo, color, noOfWheels, fuelType, fuelCapacity));
 						break;
 					case '4':
-						noOfSeats = Util.AskForInt("Enter no of Bus seats (eg 50):\t");
+						noOfSeats = Util.AskForInt("Enter no of Bus seats (eg 50):");
 						garageHandler.AddVehicleToParkingPlace(new Bus(noOfSeats, brand, model, regNo, color, noOfWheels, fuelType, fuelCapacity));
 						break;
 					case '5':
-						length = Util.AskForInt("Enter Boat length in m (eg 10):\t");
+						length = Util.AskForInt("Enter Boat length in m (eg 10):");
 						garageHandler.AddVehicleToParkingPlace(new Boat(length, brand, model, regNo, color, noOfWheels, fuelType, fuelCapacity));
 						break;
 					case '6':
-						noOfEngines = Util.AskForInt("Enter no of Engines (eg 2):\t");
+						noOfEngines = Util.AskForInt("Enter no of Engines (eg 2):");
 						garageHandler.AddVehicleToParkingPlace(new Airplane(noOfEngines, brand, model, regNo, color, noOfWheels, fuelType, fuelCapacity));
 						break;
 					case '7':
@@ -164,59 +164,48 @@ namespace Garage
 			int noOfWheels, fuelCapacity;
 
 			Console.WriteLine("\nGive in values to the Properties you want to search for a Vehicle with?\n";
-			brand = Util.AskForString("Enter a Brand to search for:\t");
-
-			model = Util.AskForString("Enter a Model to search for:\t");
-			color = Util.AskForString("Enter a Color to search for:\t");
-			noOfWheels = Util.AskForInt("Enter no of Wheels to search for:\t");
-			fuelType = Util.AskForString("Enter the Fuel Type to search for:\t"); 
-			fuelCapacity = Util.AskForInt("Enter the Fuel Capacity to search for:\t");
+			brand = Util.AskForString("Enter a Brand to search for:");
+			model = Util.AskForString("Enter a Model to search for:");
+			color = Util.AskForString("Enter a Color to search for:");
+			noOfWheels = Util.AskForInt("Enter no of Wheels to search for:");
+			fuelType = Util.AskForString("Enter the Fuel Type to search for:"); 
+			fuelCapacity = Util.AskForInt("Enter the Fuel Capacity to search for:");
 
 			Console.Write("Input > ");
 			string input = Console.ReadLine();
-
-			try
+			
+			
+			do
 			{
+				Console.WriteLine("\nPlease choose a Vehicle to Park by entering the number \n(1, 2, 3 , 4, 5, 6, 7 or Q) of your choice"
+					+ "\n1. Search for a Vehicle by Properties."
+					+ "\n\nQ. Exit this menu.\n");
+				try
+				{
 				nav = input[0];
-			}
-			catch (IndexOutOfRangeException)
-			{
-				Console.Clear();
-				Console.WriteLine("\nPlease enter some input!");
-			}
+				}
+				catch (IndexOutOfRangeException)
+				{
+					Console.Clear();
+					Console.WriteLine("\nPlease enter some input!");
+				}
 
+				input = garageHandler.GetVehicleCommonProperties(input, out brand, out model, out regNo, out color, out noOfWheels, out fuelType, out fuelCapacity);
+				
+				switch (nav)
+				{
+					case '1':
+						garageHandler.SearchVehicleByProperties(brand, model, regNo, color, noOfWheels, fuelType, fuelCapacity);
+						break;
+					case 'Q': // Exit Menu.
+					case 'q':
+						returnToLastMenu = true;
+						break;
+					default:
+						break;
+				}
 
-			switch (nav)
-			{
-				case '1':
-					propToSearchFor = "brand";
-					break;
-				case '2':
-					propToSearchFor = "model";
-					break;
-				case '3':
-					propToSearchFor = "color";
-					break;
-				case '4':
-					propToSearchFor = "noOfWheels";
-					break;
-				case '5':
-					propToSearchFor = "fuelType";
-					break;
-				case '6':
-					propToSearchFor = "fuelCapacity";
-					break;
-				case '7':
-				case 'Q': // Exit Menu.
-				case 'q':
-					returnToLastMenu = true;
-					break;
-				default:
-					break;
-			}
-
-		} while (!returnToLastMenu);
-			SearchVehicleByProperties(propToSearchFor);
+			} while (!returnToLastMenu);
 		}
 	}
 }

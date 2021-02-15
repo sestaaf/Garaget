@@ -128,7 +128,7 @@ namespace Garage
 			
 		}
 
-		public void SearchVehicleByProperties(string propToSearchFor)
+		public void SearchVehicleByProperties(string brand, string model, string regNo, string color, int noOfWheels, string fuelType, int fuelCapacity)
 		{
 			
 		}

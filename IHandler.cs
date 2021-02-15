@@ -13,6 +13,6 @@ namespace Garage
 		void GetVehicleOut();
 		void ListAllParkedVehicles();
 		void PrePopulateGarage();
-		void SearchVehicleByProperties(string propToSearchFor);
+		void SearchVehicleByProperties(string brand, string model, string regNo, string color, int noOfWheels, string fuelType, int fuelCapacity);
 	}
 }
