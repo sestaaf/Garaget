@@ -14,8 +14,6 @@ namespace Garage
 		}
 		public void MainMenu()
 		{
-			char nav = ' ';
-
 			while (true)
 			{
 				Console.WriteLine("\nPlease navigate through the menu by entering either of \n(1, 2, 3 , 4, 5, 6 or Q of your choice:\n"
@@ -30,6 +28,8 @@ namespace Garage
 				Console.Write("Input > ");
 
 				string input = Console.ReadLine();
+	
+				char nav = ' ';
 
 				try
 				{
@@ -73,9 +73,43 @@ namespace Garage
 
 		}
 
-		public void ParkManuallyMenu()
+		public void subMenuParking()
+		{
+
+			Console.WriteLine("\nManually park a Vehicle or PrePopulate the Garage? \n(Your choise: M or P, Q to Main Menu.\n");
+			Console.Write("Input > ");
+			//string input = Console.ReadLine();
+			string choice = Console.ReadLine().ToUpper().Substring(0, 1);
+			bool toMainMenu = false;
+			var ui = new UI();
+
+			do
+			{
+				switch (choice)
+				{
+					case ("M"):
+						ParkManuallyMenu();
+						toMainMenu = true;
+						break;
+					case ("P"):
+						garageHandler.PrePopulateGarage()
+						toMainMenu = true;
+						break;
+					case ("Q"):
+						toMainMenu = true;
+						break;
+					default:
+						continue;
+				}
+
+			} while (!toMainMenu) ;
+		}
+		
+public void ParkManuallyMenu()
 		{
 			bool returnToMainMenu = false;
+			char nav = ' ';
+
 			do
 			{
 				Console.WriteLine("\nPlease navigate through the menu by inputting the number \n(1, 2, 3 , 4, 5, 6, 7 or Q) of your choice"
@@ -91,7 +125,6 @@ namespace Garage
 				Console.Write("Input > ");
 				string input = Console.ReadLine();
 
-				char nav = ' ';
 				try
 				{
 					nav = input[0];
@@ -102,32 +135,37 @@ namespace Garage
 					Console.WriteLine("\nPlease enter some input!");
 				}
 
-				//var vehicleToParkM = Vehicle vehicle;
 				string model, regNo, color, fuelType;
-				int noOfHorsePowers, noOfWheels, fuelCapacity;
-				
-				input = GetVehicleCommonProperties(input, out model, out regNo, out color, out noOfWheels, out fuelType, out fuelCapacity);
+				int noOfHorsePowers, noOfWheels, fuelCapacity, cylinderVolume;
+				int weight, noOfSeats, length, noOfEngines;
+
+				input = garageHandler.GetVehicleCommonProperties(input, out model, out regNo, out color, out noOfWheels, out fuelType, out fuelCapacity);
 
 				switch (nav)
 				{
 					case '1':
-						noOfHorsePowers = Util.AskForInt("Enter no of HorsePowers:\t");
-						garageHandler.AddVehicleToParkingPlace(new Car(noOfHorsePowers, model, regNo, color, noOfWheels, fuelType, fuelCapacity));
+						noOfHorsePowers = Util.AskForInt("Enter no of HorsePowers (eg 150):\t");
+						garageHandler?.AddVehicleToParkingPlace(new Car(noOfHorsePowers, model, regNo, color, noOfWheels, fuelType, fuelCapacity));
 						break;
 					case '2':
-
+						cylinderVolume = Util.AskForInt("Enter Cylinder volume (eg 1200):\t");
+						garageHandler?.AddVehicleToParkingPlace(new Motorcycle(cylinderVolume, model, regNo, color, noOfWheels, fuelType, fuelCapacity));
 						break;
 					case '3':
-
+						weight = Util.AskForInt("Enter the Trikes weight (eg 325):\t");
+						garageHandler?.AddVehicleToParkingPlace(new Trike(weight, model, regNo, color, noOfWheels, fuelType, fuelCapacity));
 						break;
 					case '4':
-
+						noOfSeats = Util.AskForInt("Enter no of Bus seats (eg 50):\t");
+						garageHandler?.AddVehicleToParkingPlace(new Bus(noOfSeats, model, regNo, color, noOfWheels, fuelType, fuelCapacity));
 						break;
 					case '5':
-
+						length = Util.AskForInt("Enter Boat length in m (eg 10):\t");
+						garageHandler?.AddVehicleToParkingPlace(new Boat(length, model, regNo, color, noOfWheels, fuelType, fuelCapacity));
 						break;
 					case '6':
-
+						noOfEngines = Util.AskForInt("Enter no of Engines (eg 2):\t");
+						garageHandler?.AddVehicleToParkingPlace(new Airplane(noOfEngines, model, regNo, color, noOfWheels, fuelType, fuelCapacity));
 						break;
 					case '7':
 						garageHandler.ListAllParkedVehicles();
@@ -143,16 +181,6 @@ namespace Garage
 				//garageHandler.AddVehicleToGarage(vehicleToParkM);
 			} while (!returnToMainMenu);
 
-			static string GetVehicleCommonProperties(string input, out string model, out string regNo, out string color, out int noOfWheels, out string fuelType, out int fuelCapacity)
-			{
-				model = Util.AskForString("Enter Model (eg VW Golf):\t");
-				regNo = Util.AskForString("Enter Reg No (eg ABC123):\t").ToUpper();
-				color = Util.AskForString("Enter Color (eg White):\t");
-				noOfWheels = Util.AskForInt("Enter Number of wheels (eg 4):\t");
-				fuelType = Util.AskForString("Enter Fuel type (eg Petrol or Diesel)\t:");
-				fuelCapacity = Util.AskForInt("Enter Fuel capacity (in liters):\t");
-				return input;
-			}
 		}
 	}
 }
