@@ -8,7 +8,7 @@ namespace Garage
 	{
 		public int NoOfSeats { get; set; }
 
-		public Bus(int noOfSeats, string model, string regNo, string color, int noOfWheels, string fuelType, int fuelCapacity) : base(model, regNo, color, noOfWheels, fuelType, fuelCapacity)
+		public Bus(int noOfSeats, string brand, string model, string regNo, string color, int noOfWheels, string fuelType, int fuelCapacity) : base(brand, model, regNo, color, noOfWheels, fuelType, fuelCapacity)
 		{
 			NoOfSeats = noOfSeats;
 		}

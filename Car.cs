@@ -8,7 +8,7 @@ namespace Garage
 	{
 		public int NoOfHorsePowers { get; set; }
 
-		public Car(int noOfHorsePowers, string model, string regNo, string color, int noOfWheels, string fuelType, int fuelCapacity) : base(model, regNo, color, noOfWheels, fuelType, fuelCapacity)
+		public Car(int noOfHorsePowers, string brand, string model, string regNo, string color, int noOfWheels, string fuelType, int fuelCapacity) : base(brand, model, regNo, color, noOfWheels, fuelType, fuelCapacity)
 		{
 			NoOfHorsePowers = noOfHorsePowers;
 		}

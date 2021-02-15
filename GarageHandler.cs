@@ -47,15 +47,15 @@ namespace Garage
 		{
 			var vehiclesToParkPopulate = new List<Vehicle>
 			{
-				new Car(200, "Volvo V60", "ABC121", "Green", 4, "petrol", 65),
-				new Car(250, "Volvo V90", "ABC122", "Red", 4, "diesel", 70),
-				new Car(190, "Volkswagen Passat", "BAC121", "Blue", 4, "electric/petrol", 60),
-				new Car(200, "Volkswagen Golf", "BAC122", "White", 4, "petrol", 60),
-				new Bus(60, "Scania", "CBA121", "Blue", 8, "diesel", 100),
-				new Bus(100, "Man", "CBA122", "Red", 4, "diesel", 120),
-				new Motorcycle(1200, "BMW R1200RS", "CAB121", "Silver", 2, "petrol", 20),
-				new Airplane(2, "Attack Aircraft", "XYXKK34122", "White", 4, "petrol", 200),
-				new Boat(10, "Chris Craft Triple", "KKXCY47192", "Yellow", 4, "petrol", 200),
+				new Car(200, "Volvo", "V60", "ABC121", "Green", 4, "petrol", 65),
+				new Car(250, "Volvo", "V90", "ABC122", "Red", 4, "diesel", 70),
+				new Car(190, "Volkswagen", "Passat", "BAC121", "Blue", 4, "electric/petrol", 60),
+				new Car(200, "Volkswagen", "Golf", "BAC122", "White", 4, "petrol", 60),
+				new Bus(60, "Scania", "8000", "CBA121", "Blue", 8, "diesel", 100),
+				new Bus(100, "Man", "3000", "CBA122", "Red", 4, "diesel", 120),
+				new Motorcycle(1200, "BMW", "R1200RS", "CAB121", "Silver", 2, "petrol", 20),
+				new Airplane(2, "Attack", "Aircraft", "XYXKK34122", "White", 4, "petrol", 200),
+				new Boat(10, "Chris Craft", "Triple", "KKXCY47192", "Yellow", 4, "petrol", 200),
 			};
 			AddVehicleToGarage(vehiclesToParkPopulate);
 		}
@@ -97,46 +97,35 @@ namespace Garage
 				{
 					Console.WriteLine($"Vehicle with reg no {regNoToSearch} is NOT found in the Garage.");
 					return false;
-				} 
+				}
 			}
 			return false;
 		}
 
-		public bool GetVehicleOut()
+		public void GetVehicleOut()
 		{
 			Console.WriteLine("What Reg no to get out of the Garage? (eg AAA111):");
 			string regNoToSearch = Console.ReadLine().ToUpper();
 
-			if (regNoToSearch != null)
+			ListAllParkedVehicles();
+
+			if (regNoToSearch != null && regNoToSearch.Length >= 6)
 			{
 				var result = garage?
-						.Where(r => r.RegNo == regNoToSearch)
-						.Select(r => r.RegNo);
+						.FirstOrDefault(r => r.RegNo == regNoToSearch);
 
-				if (result.Contains(regNoToSearch))
+				if (result is null)
 				{
-					Console.WriteLine($"Vehicle with reg no {regNoToSearch} found in the Garage.");
-					Console.WriteLine("Do you want to get it out of the Garage? (Y/N):");
-
-					var answer = Console.ReadLine().ToUpper().Substring(0, 1);
-
-					switch (answer)
-					{
-						case "Y":
-							var vehiclesInGarage = new ArrayList(garage.ToArray());
-							vehiclesInGarage.Remove(regNoToSearch);
-							ListAllParkedVehicles();
-							break;
-						case "N":
-							Console.WriteLine("OK, try again.");
-							break;
-						default:
-							break;
-					}
-					return true;
+					Console.WriteLine("This reg no cannot be found in the Garage.");
+				}
+				else
+				{
+					if(garage.Remove(result)) 
+						Console.WriteLine($"Vehicle with reg no {regNoToSearch} has been removed from the Garage.\n");
 				}
 			}
-			return false;
+			ListAllParkedVehicles();
+			
 		}
 
 		public void SearchVehicleByProperties()
@@ -156,8 +145,9 @@ namespace Garage
 				}
 			}
 		}
-		public string GetVehicleCommonProperties(string input, out string model, out string regNo, out string color, out int noOfWheels, out string fuelType, out int fuelCapacity)
+		public string GetVehicleCommonProperties(string input, out string brand, out string model, out string regNo, out string color, out int noOfWheels, out string fuelType, out int fuelCapacity)
 		{
+			brand = Util.AskForString("Enter the Brand of your Vehicle:");
 			model = Util.AskForString("Enter Model of your Vehicle:");
 			regNo = Util.AskForString("Enter Reg No (eg ACB132):").ToUpper();
 			color = Util.AskForString("Enter Color:");

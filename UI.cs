@@ -107,37 +107,37 @@ namespace Garage
 					Console.WriteLine("\nPlease enter some input!");
 				}
 
-				string model, regNo, color, fuelType;
+				string brand, model, regNo, color, fuelType;
 				int noOfHorsePowers, noOfWheels, fuelCapacity, cylinderVolume;
 				int weight, noOfSeats, length, noOfEngines;
 
-				input = garageHandler.GetVehicleCommonProperties(input, out model, out regNo, out color, out noOfWheels, out fuelType, out fuelCapacity);
+				input = garageHandler.GetVehicleCommonProperties(input, out brand, out model, out regNo, out color, out noOfWheels, out fuelType, out fuelCapacity);
 
 				switch (nav)
 				{
 					case '1':
 						noOfHorsePowers = Util.AskForInt("Enter no of HorsePowers (eg 150):\t");
-						garageHandler.AddVehicleToParkingPlace(new Car(noOfHorsePowers, model, regNo, color, noOfWheels, fuelType, fuelCapacity));
+						garageHandler.AddVehicleToParkingPlace(new Car(noOfHorsePowers, brand, model, regNo, color, noOfWheels, fuelType, fuelCapacity));
 						break;
 					case '2':
 						cylinderVolume = Util.AskForInt("Enter Cylinder volume (eg 1200):\t");
-						garageHandler.AddVehicleToParkingPlace(new Motorcycle(cylinderVolume, model, regNo, color, noOfWheels, fuelType, fuelCapacity));
+						garageHandler.AddVehicleToParkingPlace(new Motorcycle(cylinderVolume, brand, model, regNo, color, noOfWheels, fuelType, fuelCapacity));
 						break;
 					case '3':
 						weight = Util.AskForInt("Enter the Trikes weight (eg 325):\t");
-						garageHandler.AddVehicleToParkingPlace(new Trike(weight, model, regNo, color, noOfWheels, fuelType, fuelCapacity));
+						garageHandler.AddVehicleToParkingPlace(new Trike(weight, brand, model, regNo, color, noOfWheels, fuelType, fuelCapacity));
 						break;
 					case '4':
 						noOfSeats = Util.AskForInt("Enter no of Bus seats (eg 50):\t");
-						garageHandler.AddVehicleToParkingPlace(new Bus(noOfSeats, model, regNo, color, noOfWheels, fuelType, fuelCapacity));
+						garageHandler.AddVehicleToParkingPlace(new Bus(noOfSeats, brand, model, regNo, color, noOfWheels, fuelType, fuelCapacity));
 						break;
 					case '5':
 						length = Util.AskForInt("Enter Boat length in m (eg 10):\t");
-						garageHandler.AddVehicleToParkingPlace(new Boat(length, model, regNo, color, noOfWheels, fuelType, fuelCapacity));
+						garageHandler.AddVehicleToParkingPlace(new Boat(length, brand, model, regNo, color, noOfWheels, fuelType, fuelCapacity));
 						break;
 					case '6':
 						noOfEngines = Util.AskForInt("Enter no of Engines (eg 2):\t");
-						garageHandler.AddVehicleToParkingPlace(new Airplane(noOfEngines, model, regNo, color, noOfWheels, fuelType, fuelCapacity));
+						garageHandler.AddVehicleToParkingPlace(new Airplane(noOfEngines, brand, model, regNo, color, noOfWheels, fuelType, fuelCapacity));
 						break;
 					case '7':
 						garageHandler.ListAllParkedVehicles();

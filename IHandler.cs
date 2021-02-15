@@ -9,8 +9,8 @@ namespace Garage
 		void CreateGarage();
 		bool FindVehicleByRegNo();
 		void GaragePopulated();
-		string GetVehicleCommonProperties(string input, out string model, out string regNo, out string color, out int noOfWheels, out string fuelType, out int fuelCapacity);
-		bool GetVehicleOut();
+		string GetVehicleCommonProperties(string input, out string brand, out string model, out string regNo, out string color, out int noOfWheels, out string fuelType, out int fuelCapacity);
+		void GetVehicleOut();
 		void ListAllParkedVehicles();
 		void PrePopulateGarage();
 		void SearchVehicleByProperties();

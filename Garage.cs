@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Garage
@@ -9,6 +10,7 @@ namespace Garage
 	{
 
 		private T[] vehiclesParked;
+		private int count;
 
 		public T this[int index]
 		{
@@ -22,7 +24,7 @@ namespace Garage
 			}
 		}
 
-		//public bool IsFull  => vehiclesParked.
+		public bool IsFull => count >= vehiclesParked.Length;
 
 		public Garage(int numberOfParkingPlaces)
 		{
@@ -38,6 +40,7 @@ namespace Garage
 				if(vehiclesParked[i] is null)
 				{
 					vehiclesParked[i] = vehicle;
+					count++;
 					return true;
 				}
 			}
@@ -62,6 +65,21 @@ namespace Garage
 		IEnumerator IEnumerable.GetEnumerator()
 		{
 			return GetEnumerator();
+		}
+
+		internal bool Remove(T result)
+		{
+			for (int i = 0; i < vehiclesParked.Length; i++)
+			{
+				if (vehiclesParked[i] == result)
+				{
+					vehiclesParked[i] = null;
+					count--;
+					return true;
+				}
+
+			}
+			return false;
 		}
 	}
 }
