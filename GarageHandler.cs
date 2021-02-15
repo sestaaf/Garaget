@@ -107,8 +107,6 @@ namespace Garage
 			Console.WriteLine("What Reg no to get out of the Garage? (eg AAA111):");
 			string regNoToSearch = Console.ReadLine().ToUpper();
 
-			ListAllParkedVehicles();
-
 			if (regNoToSearch != null && regNoToSearch.Length >= 6)
 			{
 				var result = garage?
@@ -124,13 +122,23 @@ namespace Garage
 						Console.WriteLine($"Vehicle with reg no {regNoToSearch} has been removed from the Garage.\n");
 				}
 			}
-			ListAllParkedVehicles();
-			
 		}
 
 		public void SearchVehicleByProperties(string brand, string model, string regNo, string color, int noOfWheels, string fuelType, int fuelCapacity)
 		{
-			
+			var result = garage
+				.Where(v => v.Brand == brand)
+				.Where(v => v.Model == model)
+				.Where(v => v.RegNo == regNo)
+				.Where(v => v.Color == color)
+				.Where(v => v.NoOfWheels == noOfWheels)
+				.Where(v => v.FuelType == fuelType)
+				.Where(v => v.FuelCapacity == fuelCapacity);
+
+			foreach (var item in result)
+			{
+				Console.WriteLine(item);
+			}
 		}
 
 		public void ListAllParkedVehicles()

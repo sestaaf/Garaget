@@ -63,7 +63,6 @@ namespace Garage
 						break;
 					case '6':
 						SearchByPropertyMenu();
-						garageHandler.SearchVehicleByProperties();
 						break;
 					case '7':
 						garageHandler.ListAllParkedVehicles();
@@ -158,12 +157,11 @@ namespace Garage
 		{
 			bool returnToLastMenu = false;
 			char nav = ' ';
-			string propToSearchFor = ""; 
 
 			string brand, model, regNo, color, fuelType;
 			int noOfWheels, fuelCapacity;
 
-			Console.WriteLine("\nGive in values to the Properties you want to search for a Vehicle with?\n";
+			Console.WriteLine("\nGive in values to the Properties you want to search for a Vehicle with?\n");
 			brand = Util.AskForString("Enter a Brand to search for:");
 			model = Util.AskForString("Enter a Model to search for:");
 			color = Util.AskForString("Enter a Color to search for:");
