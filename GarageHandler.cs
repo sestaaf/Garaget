@@ -9,7 +9,7 @@ namespace Garage
 	public class GarageHandler : IHandler
 	{
 		private Garage<Vehicle> garage;
-		
+
 		public void CreateGarage()
 		{
 			bool testGarageSize = false;
@@ -23,7 +23,7 @@ namespace Garage
 				{
 					int.TryParse(input, out int parkingCapacity);
 					garage = new Garage<Vehicle>(numberOfParkingPlaces: parkingCapacity);
-					Console.WriteLine($"A garage with {parkingCapacity} parking places are created.");
+					Console.WriteLine($"A garage with {parkingCapacity} parking places are created.\n");
 					testGarageSize = true;
 				}
 				else
@@ -34,7 +34,7 @@ namespace Garage
 
 			} while (!testGarageSize);
 		}
-		public void PopulateGarage()
+		public void GaragePopulated()
 		{
 			if (garage == null)
 			{
@@ -42,7 +42,7 @@ namespace Garage
 				CreateGarage();
 			}
 		}
-		
+
 		public void PrePopulateGarage()
 		{
 			var vehiclesToParkPopulate = new List<Vehicle>
@@ -68,22 +68,77 @@ namespace Garage
 				Console.WriteLine(message);
 			}
 		}
-		public void GetVehicleOut()
+		public string AddVehicleToParkingPlace(Vehicle vehicle)
 		{
-			throw new NotImplementedException();
-		}
+			var found = garage.FirstOrDefault(g => g?.RegNo == vehicle.RegNo);
 
-		public void FindVehicleByRegNo()
+			if (found != null) return "RegNo exists! Already parked. Wrong RegNo given, please try again.";
+
+			// Try to park the vehicle and test if it's possible.
+			var parkingWorks = garage.Park(vehicle);
+			return parkingWorks ? $"Your {vehicle.GetType().Name} with reg no {vehicle.RegNo} is parked." : "Error - Parking not possible! Garage is full!";
+		}
+		public bool FindVehicleByRegNo()
 		{
-			Console.WriteLine("What Reg No do you look for?");
+			Console.WriteLine("What Reg no do you look for?");
 			string regNoToSearch = Console.ReadLine().ToUpper();
+
 			if (regNoToSearch != null)
 			{
-				//var result = garage.VehiclesParked
-				//		.Where(r => r.RegNo == regNoToSearch);
-				//return result;
+				var result = garage
+						.Where(r => r.RegNo == regNoToSearch)
+						.Select(r => r.RegNo);
+				if (result.Contains(regNoToSearch))
+				{
+					Console.WriteLine($"Vehicle with reg no {regNoToSearch} has been found in the Garage.");
+					return true;
+				}
+				else
+				{
+					Console.WriteLine($"Vehicle with reg no {regNoToSearch} is NOT found in the Garage.");
+					return false;
+				} 
 			}
+			return false;
 		}
+
+		public bool GetVehicleOut()
+		{
+			Console.WriteLine("What Reg no to get out of the Garage? (eg AAA111):");
+			string regNoToSearch = Console.ReadLine().ToUpper();
+
+			if (regNoToSearch != null)
+			{
+				var result = garage?
+						.Where(r => r.RegNo == regNoToSearch)
+						.Select(r => r.RegNo);
+
+				if (result.Contains(regNoToSearch))
+				{
+					Console.WriteLine($"Vehicle with reg no {regNoToSearch} found in the Garage.");
+					Console.WriteLine("Do you want to get it out of the Garage? (Y/N):");
+
+					var answer = Console.ReadLine().ToUpper().Substring(0, 1);
+
+					switch (answer)
+					{
+						case "Y":
+							var vehiclesInGarage = new ArrayList(garage.ToArray());
+							vehiclesInGarage.Remove(regNoToSearch);
+							ListAllParkedVehicles();
+							break;
+						case "N":
+							Console.WriteLine("OK, try again.");
+							break;
+						default:
+							break;
+					}
+					return true;
+				}
+			}
+			return false;
+		}
+
 		public void SearchVehicleByProperties()
 		{
 			throw new NotImplementedException();
@@ -95,30 +150,13 @@ namespace Garage
 				foreach (var item in garage)
 				{
 					if (item != null)
-					{ 
+					{
 						Console.WriteLine($"{item.GetType().Name} Model: {item.Model}, RegNo: {item.RegNo}.");
 					}
 				}
 			}
 		}
-		internal string AddVehicleToParkingPlace(Vehicle vehicle)
-		{
-			// Check if RegNo is already in the Garage!
-			// ToDo : Går bra att försöka köra de 9 fordonen igen, men inte enstaka!
-			//		  Då hittas att de finns redan och går tillbaka till menyn.
-			//		  Men inte om enstaka fordon ska läggas in, då får g.RegNo
-			//		  spel och tycker att det är null och kraschar.
-				
-			var found = garage.FirstOrDefault(g => g?.RegNo == vehicle.RegNo);
-			
-			if (found != null) return "RegNo exists! Already parked. Wrong RegNo given, please try again.";
-
-			// Try to park the vehicle and test if it's possible.
-			var parkingWorks = garage.Park(vehicle);
-			return parkingWorks ? $"Your {vehicle.GetType().Name} with reg no {vehicle.RegNo} is parked." : "Error - Parking not possible! Garage is full!";
-		}
-
-		internal string GetVehicleCommonProperties(string input, out string model, out string regNo, out string color, out int noOfWheels, out string fuelType, out int fuelCapacity)
+		public string GetVehicleCommonProperties(string input, out string model, out string regNo, out string color, out int noOfWheels, out string fuelType, out int fuelCapacity)
 		{
 			model = Util.AskForString("Enter Model of your Vehicle:");
 			regNo = Util.AskForString("Enter Reg No (eg ACB132):").ToUpper();

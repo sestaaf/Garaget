@@ -16,13 +16,14 @@ namespace Garage
 		{
 			while (true)
 			{
-				Console.WriteLine("\nPlease navigate through the menu by entering either of \n(1, 2, 3 , 4, 5, 6 or Q of your choice:\n"
+				Console.WriteLine("\nPlease navigate through the menu by entering either of \n(1, 2, 3 , 4, 5, 6, 7 or Q of your choice:\n"
 					+ "\n1. Create a Garage."
-					+ "\n2. Manually Park a Vehicle or Auto-Populate the Garage."
-					+ "\n3. Get a parked Vehicle out of the Garage."
+					+ "\n2. Auto-Populate the Garage."
+					+ "\n3. Manually Park a Vehicle."
 					+ "\n4. Find a specific parked Vehicle by Registration No."
-					+ "\n5. Search for Vehicle(s) by Properties."
-					+ "\n6. List ALL Vehicles parked in the Garage."
+					+ "\n5. Get a parked Vehicle out of the Garage."
+					+ "\n6. Search for Vehicle(s) by Properties."
+					+ "\n7. List ALL Vehicles parked in the Garage."
 					+ "\n\nQ. Exit the application\n");
 
 				Console.Write("Input > ");
@@ -47,18 +48,23 @@ namespace Garage
 						garageHandler.CreateGarage();
 						break;
 					case '2':
-						garageHandler.PopulateGarage();
+						garageHandler.GaragePopulated();
+						garageHandler.PrePopulateGarage();
 						break;
 					case '3':
-						garageHandler.GetVehicleOut();
+						garageHandler.GaragePopulated();
+						ParkManuallyMenu();
 						break;
 					case '4':
 						garageHandler.FindVehicleByRegNo();
 						break;
 					case '5':
-						garageHandler.SearchVehicleByProperties();
+						garageHandler.GetVehicleOut();
 						break;
 					case '6':
+						garageHandler.SearchVehicleByProperties();
+						break;
+					case '7':
 						garageHandler.ListAllParkedVehicles();
 						break;
 					case 'Q': // Exit Menu.
@@ -68,46 +74,12 @@ namespace Garage
 					default:
 						break;
 				}
-
 			}
-
-		}
-
-		public void subMenuParking()
-		{
-
-			Console.WriteLine("\nManually park a Vehicle or PrePopulate the Garage? \n(Your choise: M or P, Q to Main Menu.\n");
-			Console.Write("Input > ");
-			//string input = Console.ReadLine();
-			string choice = Console.ReadLine().ToUpper().Substring(0, 1);
-			bool toMainMenu = false;
-			var ui = new UI();
-
-			do
-			{
-				switch (choice)
-				{
-					case ("M"):
-						ParkManuallyMenu();
-						toMainMenu = true;
-						break;
-					case ("P"):
-						garageHandler.PrePopulateGarage()
-						toMainMenu = true;
-						break;
-					case ("Q"):
-						toMainMenu = true;
-						break;
-					default:
-						continue;
-				}
-
-			} while (!toMainMenu) ;
 		}
 		
-public void ParkManuallyMenu()
+		public void ParkManuallyMenu()
 		{
-			bool returnToMainMenu = false;
+			bool returnToLastMenu = false;
 			char nav = ' ';
 
 			do
@@ -145,42 +117,40 @@ public void ParkManuallyMenu()
 				{
 					case '1':
 						noOfHorsePowers = Util.AskForInt("Enter no of HorsePowers (eg 150):\t");
-						garageHandler?.AddVehicleToParkingPlace(new Car(noOfHorsePowers, model, regNo, color, noOfWheels, fuelType, fuelCapacity));
+						garageHandler.AddVehicleToParkingPlace(new Car(noOfHorsePowers, model, regNo, color, noOfWheels, fuelType, fuelCapacity));
 						break;
 					case '2':
 						cylinderVolume = Util.AskForInt("Enter Cylinder volume (eg 1200):\t");
-						garageHandler?.AddVehicleToParkingPlace(new Motorcycle(cylinderVolume, model, regNo, color, noOfWheels, fuelType, fuelCapacity));
+						garageHandler.AddVehicleToParkingPlace(new Motorcycle(cylinderVolume, model, regNo, color, noOfWheels, fuelType, fuelCapacity));
 						break;
 					case '3':
 						weight = Util.AskForInt("Enter the Trikes weight (eg 325):\t");
-						garageHandler?.AddVehicleToParkingPlace(new Trike(weight, model, regNo, color, noOfWheels, fuelType, fuelCapacity));
+						garageHandler.AddVehicleToParkingPlace(new Trike(weight, model, regNo, color, noOfWheels, fuelType, fuelCapacity));
 						break;
 					case '4':
 						noOfSeats = Util.AskForInt("Enter no of Bus seats (eg 50):\t");
-						garageHandler?.AddVehicleToParkingPlace(new Bus(noOfSeats, model, regNo, color, noOfWheels, fuelType, fuelCapacity));
+						garageHandler.AddVehicleToParkingPlace(new Bus(noOfSeats, model, regNo, color, noOfWheels, fuelType, fuelCapacity));
 						break;
 					case '5':
 						length = Util.AskForInt("Enter Boat length in m (eg 10):\t");
-						garageHandler?.AddVehicleToParkingPlace(new Boat(length, model, regNo, color, noOfWheels, fuelType, fuelCapacity));
+						garageHandler.AddVehicleToParkingPlace(new Boat(length, model, regNo, color, noOfWheels, fuelType, fuelCapacity));
 						break;
 					case '6':
 						noOfEngines = Util.AskForInt("Enter no of Engines (eg 2):\t");
-						garageHandler?.AddVehicleToParkingPlace(new Airplane(noOfEngines, model, regNo, color, noOfWheels, fuelType, fuelCapacity));
+						garageHandler.AddVehicleToParkingPlace(new Airplane(noOfEngines, model, regNo, color, noOfWheels, fuelType, fuelCapacity));
 						break;
 					case '7':
 						garageHandler.ListAllParkedVehicles();
 						break;
 					case 'Q': // Exit Menu.
 					case 'q':
-						returnToMainMenu = true;
+						returnToLastMenu = true;
 						break;
 					default:
 						break;
 				}
 				
-				//garageHandler.AddVehicleToGarage(vehicleToParkM);
-			} while (!returnToMainMenu);
-
+			} while (!returnToLastMenu);
 		}
 	}
 }

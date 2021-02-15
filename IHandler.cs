@@ -1,17 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Garage
 {
-	interface IHandler
+	public interface IHandler
 	{
+		void AddVehicleToGarage(IEnumerable<Vehicle> vehiclesToPark);
+		string AddVehicleToParkingPlace(Vehicle vehicle);
 		void CreateGarage();
-		void PopulateGarage();
-		void GetVehicleOut();
-		void FindVehicleByRegNo();
-		void SearchVehicleByProperties();
+		bool FindVehicleByRegNo();
+		void GaragePopulated();
+		string GetVehicleCommonProperties(string input, out string model, out string regNo, out string color, out int noOfWheels, out string fuelType, out int fuelCapacity);
+		bool GetVehicleOut();
 		void ListAllParkedVehicles();
-
+		void PrePopulateGarage();
+		void SearchVehicleByProperties();
 	}
 }
