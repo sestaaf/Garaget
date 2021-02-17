@@ -6,9 +6,11 @@ namespace Garage
 {
 	static class Extension
 	{
-		public static string Hej(this string name, string newWord)
-		{
-			return $"{name} {newWord}";
-		}
+		
+		// Bara ett exempel från DM.
+		//public static string Hej(this string name, string newWord)
+		//{
+		//	return $"{name} {newWord}";
+		//}
 	}
 }
